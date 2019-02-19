@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+    <section class="page-section cta">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                    <div class="bg-faded rounded p-5">
+                        {% if parameters['length'] != 0 %}
+                            <h2 class="section-heading">
+                                <span class="section-heading-lower">Twoje notatki</span>
+                            </h2>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" class="col-sm-4">Notatka</th>
+                                        <th scope="col" class="col-sm-4">Otwórz</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for i in range(parameters['length']) %}
+                                        <tr>
+                                            <td>{{ parameters['files'][i] }}</td>
+                                            <td><a href="/note/{{ parameters['download_links'][i] }}">Show</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            Tu pojawią się Twoje notatki
+                        {% endif %}
+                    </div>
+                    <br/>
+                                    <div class="bg-faded rounded p-5">
+                        {% if parameters['length_shared'] != 0 %}
+                            <h2 class="section-heading">
+                                <span class="section-heading-lower">Notatki udostępnione dla Ciebie</span>
+                            </h2>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" class="col-sm-4">Notatka</th>
+                                        <th scope="col" class="col-sm-4">Otwórz</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for i in range(parameters['length_shared']) %}
+                                        <tr>
+                                            <td>{{ parameters['files_shared'][i] }}</td>
+                                            <td><a href="/note_show_shared/{{ parameters['download_links_shared'][i] }}">Show</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            Tu pojawią się udostępnione dla Ciebie notatki
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+
+
+
+
+

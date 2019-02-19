@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block title %}Upload{% endblock %}
+{% block content %}
+    <section class="page-section cta">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                    <div class="bg-faded rounded p-3">
+                        <h2 class="section-heading">
+                            <span class="section-heading-lower">Reset hasła</span>
+
+                        </h2>
+                        <form method="POST" action="/pass_rescue" enctype="multipart/form-data">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <div class="form-group">
+                                {% if(parameters['email']) %}
+                                    Adres email:
+                                    <input type="email" name="email" class="form-control-plaintext" readonly
+                                           value="{{parameters['email']}}">
+                                    Pytanie pomocnicze:
+                                    <input type="text" name="question" class="form-control-plaintext"
+                                           value="{{parameters['question']}}" readonly>
+                                    Twoja odpowiedź:
+                                    <input type="password" name="answer" class="form-control-plaintext">
+                                {% else %}
+                                    Podaj adres email:
+                                    <input type="email" name="email_step1" class="form-control-plaintext">
+                                {% endif %}
+
+                                <input type="submit" class="btn btn-primary form_button_big" name="send" value="Wyślij">
+                            </div>
+                        </form>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

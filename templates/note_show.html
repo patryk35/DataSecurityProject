@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block title %}Upload{% endblock %}
+{% block content %}
+    <section class="page-section cta">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                    <div class="bg-faded rounded p-3">
+                        <h2 class="section-heading">
+                            <span class="section-heading-lower">Notatka</span>
+                        </h2>
+
+                        <form>
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <div class="form-group">
+                                Tytuł: <input type="text" name="title" class="form-control-plaintext"
+                                              value="{{ parameters['title'] }}" readonly>
+                                Notatka: <textarea name="note" cols="40" rows="5" class="form-control-plaintext"
+                                                   readonly>{{ parameters['note'] }}</textarea>
+                                <input type="hidden" id="update" name="update" value="{{ parameters['update'] }}" readonly>
+                            </div>
+                        </form>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

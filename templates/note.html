@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+{% block title %}Upload{% endblock %}
+{% block content %}
+    <section class="page-section cta">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                    <div class="bg-faded rounded p-3">
+                        <h2 class="section-heading">
+                            {% if parameters['id']  == '' %}
+                                <span class="section-heading-lower">Dodaj notatke</span>
+                            {% else %}
+                                <span class="section-heading-lower">Edytuj notatke</span>
+                            {% endif %}
+                        </h2>
+                        <form method="POST" action="/note" enctype="multipart/form-data">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <div class="form-group">
+                                Tytuł: <input type="text" name="title" class="form-control-plaintext"
+                                              value="{{ parameters['title'] }}" required>
+                                Notatka: <textarea name="note" cols="40" rows="5" class="form-control-plaintext"
+                                                   placeholder="Wpisz notatkę" maxlength="200">{{ parameters['note'] }}</textarea>
+                                <input type="hidden" id="update" name="update" value="{{ parameters['update'] }}">
+                                <input type="hidden" id="id" name="id" value="{{ parameters['id'] }}">
+                                <input type="submit" class="btn btn-primary form_button_big d-none d-sm-none d-md-block"
+                                       name="send" value="Zapisz">
+                                <input type="submit" class="btn btn-primary form_button d-block d-sm-block d-md-none"
+                                       name="send" value="Zapisz">
+                            </div>
+                        </form>
+                    </div>
+                    <br/>
+                    {% if parameters['id']  != '' %}
+                        <div class="bg-faded rounded p-3">
+                            <h2 class="section-heading">
+                                <span class="section-heading-lower">Dostęp</span>
+                            </h2>
+                            <form method="POST" action="/share" enctype="multipart/form-data">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                <div class="form-group">
+                                    {% if parameters['public'] == 1 %}
+                                        Dostępne publicznie: <input type="checkbox" name="public"
+                                                                    value="yes" checked> <br/>
+                                    {% else %}
+                                        Dostępne publicznie: <input type="checkbox" name="public"
+                                                                    value="yes"> <br/>
+                                    {% endif %}
+                                    <input type="text" name="user" class="form-control-plaintext"
+                                           value="{{ parameters['user'] }}">
+                                    {% if parameters['allowed_count']  != 0 %}
+                                        Uprawnieni użytkownicy:
+                                        <div class="table-responsive">
+                                            <table class="table d-none d-sm-none d-md-block d-lg-block mx-auto">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col" class="col-sm-4">Użytkownik</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for i in range(parameters['allowed_count']) %}
+                                                    <tr>
+                                                        <td>{{ parameters['allowed_users'][i] }}</td>
+                                                        <td>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    {% endif %}
+                                    <input type="hidden" id="id" name="id" value="{{ parameters['id'] }}">
+                                    <input type="submit" class="btn btn-primary form_button_big"
+                                           name="send" value="Zapisz">
+                                </div>
+                            </form>
+
+                        </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,135 @@
+body {
+    font-family: Lora;
+    /* Background pattern from subtlepatterns.com */
+    background: url("../img/bg.jpg") repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Raleway
+}
+
+p {
+    line-height: 1.75
+}
+
+input.link_container {
+    width: 100%;
+}
+
+.header {
+    background-color: rgba(33, 33, 33, .9);
+}
+
+.text-faded {
+    color: rgba(255, 255, 255, .3)
+}
+
+.section-heading {
+    text-transform: uppercase
+}
+
+.section-heading .section-heading-upper {
+    display: block;
+    font-size: 1rem;
+    font-weight: 800
+}
+
+.section-heading .section-heading-lower {
+    display: block;
+    font-size: 3rem;
+    font-weight: 100
+}
+
+.message {
+    color: firebrick;
+}
+
+.bg-faded {
+    background-color: rgba(255, 255, 255, .7)
+}
+
+
+#mainNav {
+    background-color: rgba(33, 33, 33, .9);
+    font-family: Raleway;
+    margin-top: -10px;
+}
+
+#mainNav .navbar-brand {
+    color: #e6a756
+}
+
+#mainNav .navbar-nav .nav-item .nav-link {
+    color: rgba(255, 255, 255, .7);
+    font-weight: 800
+}
+
+#mainNav .navbar-nav .nav-item.active .nav-link {
+    color: #e6a756
+}
+
+
+.btn-xl {
+    font-weight: 700;
+    font-size: .8rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem
+}
+
+.intro {
+    position: relative
+}
+
+@media (min-width: 992px) {
+    .intro .intro-img {
+        width: 75%;
+        float: right
+    }
+
+    .intro .intro-text {
+        left: 0;
+        width: 60%;
+        margin-top: 3rem;
+        position: absolute
+    }
+
+    .intro .intro-text .intro-button {
+        width: 100%;
+        left: 0;
+        position: absolute;
+        bottom: -2rem
+    }
+}
+
+@media (min-width: 1200px) {
+    .intro .intro-text {
+        width: 45%
+    }
+}
+
+.cta {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.form_button {
+    width: 50%;
+    margin-top: 1rem;
+    position: absolute;
+}
+
+.form_button_big {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+
+.footer {
+    background-color: rgba(33, 33, 33, .9);
+    margin-top: 10rem;
+    width: 100%;
+}

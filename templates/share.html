@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block title %}Upload{% endblock %}
+{% block content %}
+    <section class="page-section cta">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                    <div class="bg-faded rounded p-3">
+                        <h2 class="section-heading d-none d-sm-none d-md-block">
+                            <span class="section-heading-lower">Dodaj plik</span>
+                        </h2>
+                        <h2 class="section-heading d-block d-sm-block d-md-none">
+                            <span class="section-heading-upper">Dodaj plik</span>
+                        </h2>
+                        <form method="POST" action="/note" enctype="multipart/form-data">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <div class="form-group">
+                                Tytuł:
+                                <div class="table-responsive">
+                                    <table class="table d-none d-sm-none d-md-block d-lg-block mx-auto">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col" class="col-sm-4">Notatka</th>
+                                            <th scope="col" class="col-sm-4">Owner</th>
+                                            <th scope="col" class="col-sm-4">User</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for i in range(parameters['length']) %}
+                                            <tr>
+                                                <td>{{ parameters['files'][i] }}</td>
+                                                <td><a href="/note/{{ parameters['download_links'][i] }}">Show</a></td>
+                                                <td>
+                                                    <a href="/share/{{ parameters['share_links'][i] }}">Share</a>|
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                Notatka: <textarea name="note" cols="40" rows="5" class="form-control-plaintext"
+                                                   placeholder="Wpisz notatkę">{{ parameters['note'] }}</textarea>
+                                <input type="hidden" id="update" name="update" value="{{ parameters['update'] }}">
+                                <input type="hidden" id="id" name="id" value="{{ parameters['id'] }}">
+                                <input type="submit" class="btn btn-primary form_button_big d-none d-sm-none d-md-block"
+                                       name="send" value="Zapisz">
+                                <input type="submit" class="btn btn-primary form_button d-block d-sm-block d-md-none"
+                                       name="send" value="Zapisz">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

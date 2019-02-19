@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title>Zajęcia 1</title>
+    <meta charset="UTF-8"/>
+    <link rel="Stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+<header><h1>Formularz logowania</h1></header>
+<article class="main_elem">
+    <form id="loginForm" action="/login" method="POST">
+        <div class="form_elem" id="login">
+            <div class="left">Login:</div>
+            <div class="right"><input type="text" name="login" id="log" class="data_field" required></div>
+            <div class="clear"></div>
+        </div>
+        <div class="form_elem" id="password">
+            <div class="left">Hasło:</div>
+            <div class="right"><input type="password" name="password" id="pass" class="data_field" required></div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <div class="form_elem_button">
+            <input type="submit" name="send" value="Zaloguj" id="login_button">
+            <div>
+                <a href="/pass_rescue" class="link">Zresetuj hasło</a> | <a href="/register"
+                                                                            class="link">Zarejestruj</a>
+            </div>
+            <div id="login_validation" class="validation_server"></div>
+        </div>
+
+    </form>
+</article>
+<footer class="footer">
+    <div>Patryk Milewski &#xA9; 2018</div>
+</footer>
+<script>
+    let wait_id = "";
+
+    function wait() {
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', '/waitlogin/' + wait_id, true);
+        xhr.onload = function () {
+            if (this.status == 200 || this.status == 401 || this.status == 429) {
+                if (this.status == 200) {
+                    window.location.replace("/");
+                } else {
+                    submitButton.disabled = false;
+                    var communicateField = document.getElementById('login_validation')
+                    communicateField.innerText = this.responseText
+                }
+            }
+            //setTimeout(wait, 3000)
+        };
+        xhr.send();
+    }
+
+    let submitButton = document.forms['loginForm']['send'];
+    let communicateField = document.getElementById('login_validation');
+    let loginField = document.getElementById('log');
+    let passField = document.getElementById('pass');
+    let csrf_token = "{{ csrf_token() }}";
+    submitButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        submitButton.disabled = true;
+        communicateField.innerText = "";
+        if (loginField.value == "" || passField.value == "") {
+            communicateField.innerText = "Dane muszą być podane!";
+            submitButton.disabled = false;
+
+        } else {
+            const formData = new FormData(document.getElementById('loginForm'));
+            fetch("/loginasync", {
+                method: "post",
+                headers: {
+                    "X-CSRFToken": csrf_token,
+                },
+                body: formData
+            }).then(response =>
+                response.json().then(data => ({
+                        data: data,
+                        status: response.status
+                    })
+                ).then(res => {
+                    if (res.status == 200) {
+                        console.log(res.status, res.data.wait_id);
+                        wait_id = res.data.wait_id;
+                        setTimeout(wait, 3000)
+                    } else {
+                        submitButton.disabled = false;
+                        communicateField.innerText = "Problem z połączeniem"
+                    }
+                }));
+        }
+
+
+    });
+
+</script>
+</body>
+</html>
